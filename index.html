@@ -87,10 +87,8 @@
 
     /* ---------- Prototype switcher (preview-only meta nav) ---------- */
     .proto-nav { background: #1b2127; color: #fff; font-family: var(--font-body); }
-    .proto-nav .in { max-width: var(--maxw); margin: 0 auto; padding: 0 28px; height: 40px; display: flex; align-items: center; gap: 14px; }
-    .proto-nav .pb { font-size: 12px; font-weight: 700; letter-spacing: .3px; color: #aab3b8; }
-    .proto-nav .pb b { color: var(--klj-orange); }
-    .proto-nav .links { margin-left: auto; display: flex; gap: 4px; }
+    .proto-nav .in { padding: 0; height: 40px; display: flex; align-items: center; }
+    .proto-nav .links { display: flex; gap: 4px; }
     .proto-nav a { color: #cdd2d4; font-size: 13px; font-weight: 600; text-decoration: none; padding: 6px 13px; border-radius: var(--radius); }
     .proto-nav a:hover { background: rgba(255,255,255,.12); color: #fff; text-decoration: none; }
     .proto-nav a.active { background: var(--klj-orange-text); color: #fff; }
@@ -225,7 +223,6 @@
   <!-- Prototype switcher (preview only) -->
   <div class="proto-nav">
     <div class="in">
-      <span class="pb">KL<b>J</b> · SharePoint prototype</span>
       <span class="links">
         <a href="index.html" class="active"><span class="num">01</span>Style guide</a>
         <a href="home.html"><span class="num">02</span>Portal home</a>
