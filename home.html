@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KLJ Connect · Home</title>
+  <meta name="description" content="Sample SharePoint portal landing page for KLJ Engineering, built on the KLJ portal style guide." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400..600,0..1,0&display=block" />
+  <style>
+    /* =========================================================
+       KLJ Connect — sample SharePoint portal landing page
+       Tokens from the KLJ portal style guide (kljeng.com brand)
+       ========================================================= */
+    :root {
+      --klj-orange:      #dd5900;   /* bright accent: borders, icons, large only */
+      --klj-orange-text: #c44f00;   /* AA-safe orange: links, buttons, small text */
+      --klj-orange-deep: #aa4400;
+      --klj-amber:       #ff9e1b;
+      --klj-teal:        #00848e;
+      --klj-teal-dark:   #00555b;
+      --klj-slate:       #323e48;
+      --klj-charcoal:    #3e3e3e;
+      --klj-gray:        #666d70;
+      --klj-gray-mid:    #9a9a9a;
+      --klj-border:      #cacccc;
+      --klj-border-soft: #e5e5e1;
+      --klj-white:       #ffffff;
+      --klj-paper:       #f8f8f7;
+      --klj-stone:       #ecece9;
+      --klj-success:     #1f7a44;
+      --klj-red:         #d6351a;
+
+      --radius:    4px;
+      --radius-lg: 8px;
+      /* Fluent UI depth tokens (the soft, borderless card shadows SharePoint uses) */
+      --shadow-1:  0 1.6px 3.6px rgba(0,0,0,.11), 0 0.3px 0.9px rgba(0,0,0,.07);
+      --shadow-2:  0 6.4px 14.4px rgba(0,0,0,.13), 0 1.2px 3.6px rgba(0,0,0,.10);
+      --maxw: 1264px;
+      --font: "Segoe UI", "Segoe UI Web (West European)", -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: var(--font); color: var(--klj-slate);
+      background: #f8f8f7; line-height: 1.55;
+      -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+    }
+    h1, h2, h3, h4 { margin: 0; line-height: 1.25; font-weight: 600; color: var(--klj-slate); }
+    p { margin: 0; }
+    a { color: var(--klj-orange-text); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img { max-width: 100%; display: block; }
+    .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+    .skip { position: absolute; left: -999px; top: 0; background: #fff; padding: 10px 16px; z-index: 200; }
+    .skip:focus { left: 8px; top: 8px; }
+    :focus-visible { outline: 3px solid var(--klj-orange); outline-offset: 2px; border-radius: 2px; }
+
+    /* ---------- Prototype switcher (preview-only meta nav) ---------- */
+    .proto-nav { background: #1b2127; color: #fff; }
+    .proto-nav .in { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; height: 40px; display: flex; align-items: center; gap: 14px; }
+    .proto-nav .pb { font-size: 12px; font-weight: 700; letter-spacing: .3px; color: #aab3b8; }
+    .proto-nav .pb b { color: var(--klj-orange); }
+    .proto-nav .links { margin-left: auto; display: flex; gap: 4px; }
+    .proto-nav a { color: #cdd2d4; font-size: 13px; font-weight: 600; text-decoration: none; padding: 6px 13px; border-radius: var(--radius); }
+    .proto-nav a:hover { background: rgba(255,255,255,.12); color: #fff; }
+    .proto-nav a.active { background: var(--klj-orange-text); color: #fff; }
+
+    /* ---------- Material Symbols (icons) ---------- */
+    .material-symbols-outlined {
+      font-family: "Material Symbols Outlined";
+      font-weight: normal; font-style: normal; line-height: 1;
+      letter-spacing: normal; text-transform: none; white-space: nowrap;
+      direction: ltr; -webkit-font-feature-settings: "liga"; -webkit-font-smoothing: antialiased;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 22px; /* default; overridden per context */
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      user-select: none;
+    }
+    .material-symbols-outlined.fill { font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24; }
+
+    /* ---------- Microsoft 365 suite bar (thin, dark) ---------- */
+    .suitebar { background: var(--klj-slate); color: #fff; }
+    .suitebar-inner { display: flex; align-items: center; gap: 12px; height: 48px; }
+    .waffle { background: none; border: 0; color: #e6e9ea; cursor: pointer; font-size: 17px; padding: 8px 10px; border-radius: var(--radius); line-height: 1; }
+    .waffle:hover { background: rgba(255,255,255,.12); color: #fff; }
+    .suitebar .suite-name { font-size: 15px; font-weight: 600; color: #fff; }
+    .suitebar .search { margin-left: auto; flex: 0 1 420px; position: relative; }
+    .suitebar .search input {
+      width: 100%; height: 32px; border: 0; border-radius: var(--radius);
+      padding: 0 12px 0 34px; font-size: 14px; font-family: var(--font);
+      background: rgba(255,255,255,.12); color: #fff;
+    }
+    .suitebar .search input::placeholder { color: #c7ced2; }
+    .suitebar .search .si { position: absolute; left: 9px; top: 6px; color: #c7ced2; font-size: 20px; pointer-events: none; }
+    .suitebar .actions { display: flex; align-items: center; gap: 2px; }
+    .suitebar .iconbtn { background: none; border: 0; color: #e6e9ea; cursor: pointer; padding: 8px; border-radius: var(--radius); display: inline-flex; }
+    .suitebar .iconbtn:hover { background: rgba(255,255,255,.12); color: #fff; }
+    .waffle .material-symbols-outlined { font-size: 22px; }
+    .suitebar .iconbtn .material-symbols-outlined { font-size: 20px; }
+    .suitebar .avatar { width: 30px; height: 30px; border-radius: 50%; background: var(--klj-orange-text); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 12px; margin-left: 4px; }
+
+    /* ---------- Site header (white: logo + site title + commands) ---------- */
+    .sitehead { background: #fff; }
+    .sitehead-inner { display: flex; align-items: center; gap: 14px; height: 66px; }
+    .sitehead .site-logo { height: 38px; width: auto; display: block; }
+    .sitehead .site-title { font-size: 18px; font-weight: 600; color: var(--klj-slate); padding-left: 14px; border-left: 1px solid var(--klj-border); }
+    .sitehead .commands { margin-left: auto; display: flex; align-items: center; gap: 6px; }
+    .sitehead .cmd { display: inline-flex; align-items: center; gap: 7px; font-size: 14px; font-weight: 600; color: var(--klj-slate); background: none; border: 0; cursor: pointer; padding: 8px 12px; border-radius: var(--radius); }
+    .sitehead .cmd:hover { background: var(--klj-stone); }
+    .sitehead .cmd .material-symbols-outlined { font-size: 18px; color: var(--klj-orange-text); }
+    .sitehead .members { font-size: 13px; color: var(--klj-gray); padding-left: 6px; }
+
+    /* ---------- Hub / site navigation ---------- */
+    .hubnav { background: #fff; border-bottom: 1px solid var(--klj-border-soft); position: sticky; top: 0; z-index: 100; }
+    .hubnav-inner { display: flex; align-items: center; gap: 2px; height: 44px; flex-wrap: wrap; }
+    .hubnav a { color: var(--klj-slate); font-size: 14px; font-weight: 600; padding: 11px 14px; border-bottom: 2px solid transparent; }
+    .hubnav a:hover { color: var(--klj-orange-text); text-decoration: none; }
+    .hubnav a.active { color: var(--klj-orange-text); border-bottom-color: var(--klj-orange); }
+
+    /* ---------- Page ---------- */
+    main { padding: 36px 0 0; }
+    .section { margin-bottom: 56px; }
+    .section-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 20px; gap: 16px; flex-wrap: wrap; }
+    .section-head h2 { font-size: 24px; font-weight: 600; }
+    .section-head .more { font-size: 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 3px; }
+    .section-head .more .material-symbols-outlined { font-size: 18px; }
+    .eyebrow { color: var(--klj-orange-text); font-weight: 700; font-size: 13px; margin-bottom: 4px; }
+
+    /* ---------- Hero ---------- */
+    .hero { display: grid; grid-template-columns: 1.9fr 1fr; gap: 24px; margin-bottom: 56px; }
+    .hero-main {
+      position: relative; border-radius: var(--radius-lg); overflow: hidden; min-height: 380px;
+      /* Image slot: natural full-color photo. Replace the url() per story.
+         A left-to-right black scrim darkens only the left, where the text sits,
+         and clears by ~60% so the right side stays bright and vibrant. */
+      background-color: #26303a;
+      background-image:
+        linear-gradient(to right, rgba(0,0,0,.82) 0%, rgba(0,0,0,.62) 26%, rgba(0,0,0,.28) 48%, rgba(0,0,0,0) 64%),
+        url("https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1600&q=80&auto=format&fit=crop");
+      background-size: cover; background-position: center;
+      box-shadow: var(--shadow-2); display: flex; align-items: flex-end;
+    }
+    .hero-main .cap { position: relative; padding: 36px; color: #fff; max-width: 90%; }
+    .hero-main .tag { display: inline-block; background: var(--klj-orange); color: #fff; font-size: 12px; font-weight: 700; padding: 4px 11px; border-radius: 20px; margin-bottom: 14px; }
+    .hero-main h1 { color: #fff; font-size: clamp(26px, 3.1vw, 34px); font-weight: 600; max-width: 18ch; }
+    .hero-main p { color: #e8eaec; margin-top: 12px; font-size: 16px; max-width: 52ch; }
+    .hero-main .meta { color: #c2c9cd; font-size: 13px; margin-top: 16px; }
+    .hero-side { display: grid; grid-template-rows: 1fr 1fr; gap: 24px; }
+    .hero-card {
+      position: relative; border-radius: var(--radius-lg); overflow: hidden; padding: 22px; color: #fff;
+      display: flex; flex-direction: column; justify-content: flex-end; min-height: 180px; box-shadow: var(--shadow-1);
+    }
+    /* Natural full-color photos with a black bottom scrim only where the caption sits. */
+    .hero-card { background-size: cover; background-position: center; background-color: var(--klj-slate); }
+    .hero-card.teal {
+      background-image:
+        linear-gradient(to top, rgba(0,0,0,.85) 0%, rgba(0,0,0,.45) 38%, rgba(0,0,0,0) 72%),
+        url("https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80&auto=format&fit=crop");
+    }
+    .hero-card.amber {
+      background-image:
+        linear-gradient(to top, rgba(0,0,0,.85) 0%, rgba(0,0,0,.45) 38%, rgba(0,0,0,0) 72%),
+        url("https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=80&auto=format&fit=crop");
+    }
+    .hero-card .tag { font-size: 11px; font-weight: 700; opacity: .9; margin-bottom: 6px; }
+    .hero-card h3 { color: #fff; font-size: 18px; font-weight: 600; }
+
+    /* ---------- Quick links ---------- */
+    .quick-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; }
+    .quick {
+      background: #fff; border-radius: var(--radius-lg); padding: 24px 14px; text-align: center;
+      box-shadow: var(--shadow-1); transition: box-shadow .14s ease, transform .14s ease; color: var(--klj-slate);
+    }
+    .quick:hover { box-shadow: var(--shadow-2); transform: translateY(-2px); text-decoration: none; }
+    .quick .ic { width: 48px; height: 48px; margin: 0 auto 12px; border-radius: 50%; background: #fbece3; color: var(--klj-orange-text); display: flex; align-items: center; justify-content: center; }
+    .quick .ic .material-symbols-outlined { font-size: 26px; }
+    .quick .t { font-size: 14px; font-weight: 600; }
+
+    /* ---------- News ---------- */
+    .news-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .news { background: #fff; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-1); transition: box-shadow .14s ease, transform .14s ease; }
+    .news:hover { box-shadow: var(--shadow-2); transform: translateY(-2px); }
+    /* Image slot: set background-image per card to the article's photo. */
+    .news .thumb { height: 168px; position: relative; background-color: #26303a; background-size: cover; background-position: center; }
+    .news .cat { position: absolute; top: 12px; left: 12px; background: rgba(50,62,72,.92); color: #fff; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 3px; }
+    .news .body { padding: 20px; }
+    .news .body h3 { font-size: 17px; font-weight: 600; margin-bottom: 12px; line-height: 1.3; }
+    .news .body h3 a { color: var(--klj-slate); }
+    .news .body h3 a:hover { color: var(--klj-orange-text); }
+    .news .byline { display: flex; align-items: center; gap: 9px; }
+    .news .byline .av { width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 11px; font-weight: 600; }
+    .news .byline .who { font-size: 13px; color: var(--klj-slate); font-weight: 600; line-height: 1.2; }
+    .news .byline .when { font-size: 12px; color: var(--klj-gray); line-height: 1.2; }
+
+    /* ---------- Two column: events + announcements ---------- */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .panel { background: #fff; border-radius: var(--radius-lg); box-shadow: var(--shadow-1); padding: 24px 26px; }
+    .panel h2 { font-size: 19px; margin-bottom: 16px; display: flex; align-items: center; gap: 9px; }
+    .panel h2 .material-symbols-outlined { font-size: 22px; color: var(--klj-orange-text); }
+
+    .event { display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--klj-border-soft); }
+    .event:last-child { border-bottom: 0; padding-bottom: 0; }
+    .event .date { flex-shrink: 0; width: 56px; text-align: center; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--klj-border-soft); }
+    .event .date .m { background: var(--klj-orange-text); color: #fff; font-size: 11px; font-weight: 700; padding: 3px 0; }
+    .event .date .d { font-size: 20px; font-weight: 700; padding: 4px 0; color: var(--klj-slate); }
+    .event .info h3 { font-size: 15px; font-weight: 600; }
+    .event .info h3 a { color: var(--klj-slate); }
+    .event .info .when { font-size: 13px; color: var(--klj-gray); margin-top: 3px; }
+
+    .ann { display: flex; align-items: flex-start; gap: 11px; padding: 13px 14px; border-radius: var(--radius); margin-bottom: 12px; font-size: 14px; border: 1px solid; }
+    .ann:last-child { margin-bottom: 0; }
+    .ann .ai { flex-shrink: 0; font-size: 20px; margin-top: 1px; }
+    .ann.info { background: #e6f3f4; border-color: #b9dee1; color: var(--klj-teal-dark); }
+    .ann.warn { background: #fff4e3; border-color: #ffd591; color: var(--klj-orange-deep); }
+    .ann.success { background: #e9f5ee; border-color: #b6dcc4; color: var(--klj-success); }
+    .ann strong { font-weight: 700; }
+
+    /* ---------- Projects table ---------- */
+    .proj-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-1); font-size: 14px; }
+    .proj-table th { background: #faf9f8; color: var(--klj-gray); text-align: left; padding: 14px 18px; font-weight: 600; font-size: 12px; border-bottom: 1px solid var(--klj-border-soft); }
+    .proj-table td { padding: 14px 18px; border-bottom: 1px solid var(--klj-border-soft); }
+    .proj-table tr:last-child td { border-bottom: 0; }
+    .proj-table tbody tr:hover { background: var(--klj-paper); }
+    .proj-table td a { color: var(--klj-orange-text); font-weight: 600; }
+    .pill { display: inline-block; font-size: 12px; font-weight: 700; padding: 3px 11px; border-radius: 20px; }
+    .pill.active { background: #e9f5ee; color: var(--klj-success); }
+    .pill.review { background: #fff4e3; color: var(--klj-orange-deep); }
+    .pill.hold { background: var(--klj-stone); color: var(--klj-gray); }
+
+    /* ---------- People ---------- */
+    .people-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .person { background: #fff; border-radius: var(--radius-lg); padding: 24px 20px; text-align: center; box-shadow: var(--shadow-1); transition: box-shadow .14s ease; }
+    .person:hover { box-shadow: var(--shadow-2); }
+    .person .av { width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 12px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 22px; font-weight: 600; }
+    .person .av.a { background: var(--klj-slate); }
+    .person .av.b { background: var(--klj-teal); }
+    .person .av.c { background: var(--klj-orange-text); }
+    .person .av.d { background: var(--klj-teal-dark); }
+    .person .nm { font-size: 15px; font-weight: 600; }
+    .person .rl { font-size: 13px; color: var(--klj-gray); margin-top: 2px; }
+    .person .of { font-size: 12px; color: var(--klj-gray-mid); margin-top: 6px; }
+
+    /* ---------- Footer ---------- */
+    footer { background: var(--klj-slate); color: #c7c9ca; margin-top: 12px; padding: 40px 0 28px; }
+    .foot-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 28px; }
+    /* Official reversed (white) logo for the dark footer */
+    footer .foot-logo { height: 42px; width: auto; display: block; }
+    footer .tagline { font-style: italic; color: #9fb1bd; margin-top: 12px; font-size: 14px; }
+    footer h4 { color: #fff; font-size: 14px; font-weight: 700; margin-bottom: 12px; }
+    footer ul { list-style: none; margin: 0; padding: 0; }
+    footer li { margin-bottom: 8px; }
+    footer a { color: #c7c9ca; font-size: 14px; }
+    footer a:hover { color: #fff; }
+    .foot-bar { border-top: 1px solid #4d5862; margin-top: 28px; padding-top: 18px; font-size: 13px; color: #9aa3a8; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 1000px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-side { grid-template-rows: none; grid-template-columns: 1fr 1fr; }
+      .quick-grid { grid-template-columns: repeat(3, 1fr); }
+      .news-grid { grid-template-columns: 1fr 1fr; }
+      .people-grid { grid-template-columns: 1fr 1fr; }
+      .foot-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .suitebar .search { flex-basis: 130px; }
+      .suitebar .suite-name { display: none; }
+      .sitehead .members { display: none; }
+      .two-col, .news-grid, .people-grid, .quick-grid, .hero-side { grid-template-columns: 1fr; }
+      .hubnav a { padding: 11px 10px; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <!-- Prototype switcher (preview only) -->
+  <div class="proto-nav">
+    <div class="in">
+      <span class="pb">KL<b>J</b> · SharePoint prototype</span>
+      <span class="links">
+        <a href="home.html" class="active">Portal home</a>
+        <a href="index.html">Style guide</a>
+      </span>
+    </div>
+  </div>
+
+  <!-- Microsoft 365 suite bar -->
+  <header class="suitebar">
+    <div class="wrap suitebar-inner">
+      <button class="waffle" aria-label="App launcher"><span class="material-symbols-outlined">apps</span></button>
+      <span class="suite-name">SharePoint</span>
+      <div class="search" role="search">
+        <span class="si material-symbols-outlined" aria-hidden="true">search</span>
+        <input type="search" placeholder="Search" aria-label="Search" />
+      </div>
+      <div class="actions">
+        <button class="iconbtn" aria-label="Notifications"><span class="material-symbols-outlined">notifications</span></button>
+        <button class="iconbtn" aria-label="Settings"><span class="material-symbols-outlined">settings</span></button>
+        <button class="iconbtn" aria-label="Help"><span class="material-symbols-outlined">help</span></button>
+        <span class="avatar" title="Adam Hickey">AH</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Site header: logo, title, commands -->
+  <div class="sitehead">
+    <div class="wrap sitehead-inner">
+      <img class="site-logo" src="assets/KLJ-Black.svg" alt="KLJ" />
+      <span class="site-title">KLJ Connect</span>
+      <span class="members">1,420 members</span>
+      <div class="commands">
+        <button class="cmd" type="button"><span class="material-symbols-outlined fill">star</span> Following</button>
+        <button class="cmd" type="button"><span class="material-symbols-outlined">ios_share</span> Share</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Site navigation -->
+  <nav class="hubnav" aria-label="Site navigation">
+    <div class="wrap hubnav-inner">
+      <a href="#" class="active">Home</a>
+      <a href="#">Projects</a>
+      <a href="#">Departments</a>
+      <a href="#">Resources</a>
+      <a href="#">Tools</a>
+      <a href="#">Directory</a>
+    </div>
+  </nav>
+
+  <main id="main">
+    <div class="wrap">
+
+      <!-- Hero -->
+      <section class="hero" aria-label="Featured news">
+        <article class="hero-main">
+          <div class="cap">
+            <span class="tag">Featured</span>
+            <h1>KLJ named to ENR Top 500 Design Firms for the 12th year</h1>
+            <p>Our continued growth across transportation, water, and energy keeps KLJ among the nation's leading engineering and planning firms.</p>
+            <p class="meta">Communications · June 19, 2026 · 3 min read</p>
+          </div>
+        </article>
+        <div class="hero-side">
+          <article class="hero-card teal">
+            <span class="tag">Safety</span>
+            <h3>Q3 field safety stand-down: register your crew</h3>
+          </article>
+          <article class="hero-card amber">
+            <span class="tag">People</span>
+            <h3>Open enrollment starts July 1. Here's what's new.</h3>
+          </article>
+        </div>
+      </section>
+
+      <!-- Quick links -->
+      <section class="section" aria-label="Quick links">
+        <div class="section-head"><h2>Quick links</h2></div>
+        <div class="quick-grid">
+          <a class="quick" href="#"><span class="ic"><span class="material-symbols-outlined">schedule</span></span><span class="t">Timesheets</span></a>
+          <a class="quick" href="#"><span class="ic"><span class="material-symbols-outlined">beach_access</span></span><span class="t">PTO &amp; leave</span></a>
+          <a class="quick" href="#"><span class="ic"><span class="material-symbols-outlined">folder</span></span><span class="t">Project files</span></a>
+          <a class="quick" href="#"><span class="ic"><span class="material-symbols-outlined">groups</span></span><span class="t">Directory</span></a>
+          <a class="quick" href="#"><span class="ic"><span class="material-symbols-outlined">support_agent</span></span><span class="t">IT help desk</span></a>
+          <a class="quick" href="#"><span class="ic"><span class="material-symbols-outlined">payments</span></span><span class="t">Expenses</span></a>
+        </div>
+      </section>
+
+      <!-- News -->
+      <section class="section" aria-label="Company news">
+        <div class="section-head">
+          <h2>Company news</h2>
+          <a class="more" href="#">See all news <span class="material-symbols-outlined">arrow_forward</span></a>
+        </div>
+        <div class="news-grid">
+          <article class="news">
+            <div class="thumb" style='background-image:url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=80&auto=format&fit=crop")'><span class="cat">Projects</span></div>
+            <div class="body">
+              <h3><a href="#">Bismarck Airport expansion reaches substantial completion</a></h3>
+              <div class="byline">
+                <span class="av" style="background:var(--klj-teal)">ML</span>
+                <span><span class="who">Maria Lopez</span><br><span class="when">June 17, 2026</span></span>
+              </div>
+            </div>
+          </article>
+          <article class="news">
+            <div class="thumb" style='background-image:url("https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80&auto=format&fit=crop")'><span class="cat">Culture</span></div>
+            <div class="body">
+              <h3><a href="#">Welcome our summer engineering interns</a></h3>
+              <div class="byline">
+                <span class="av" style="background:var(--klj-orange-text)">DP</span>
+                <span><span class="who">Dana Price</span><br><span class="when">June 14, 2026</span></span>
+              </div>
+            </div>
+          </article>
+          <article class="news">
+            <div class="thumb" style='background-image:url("https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=800&q=80&auto=format&fit=crop")'><span class="cat">Technology</span></div>
+            <div class="body">
+              <h3><a href="#">New survey-grade drone fleet now available to project teams</a></h3>
+              <div class="byline">
+                <span class="av" style="background:var(--klj-teal-dark)">JO</span>
+                <span><span class="who">James Owusu</span><br><span class="when">June 11, 2026</span></span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Events + Announcements -->
+      <section class="section two-col" aria-label="Events and announcements">
+        <div class="panel">
+          <h2><span class="material-symbols-outlined">event</span> Upcoming events</h2>
+          <div class="event">
+            <div class="date"><div class="m">JUN</div><div class="d">26</div></div>
+            <div class="info"><h3><a href="#">All-firm town hall (virtual)</a></h3><p class="when">11:00 AM CT · Microsoft Teams</p></div>
+          </div>
+          <div class="event">
+            <div class="date"><div class="m">JUL</div><div class="d">01</div></div>
+            <div class="info"><h3><a href="#">Benefits open enrollment opens</a></h3><p class="when">All day · Workday</p></div>
+          </div>
+          <div class="event">
+            <div class="date"><div class="m">JUL</div><div class="d">09</div></div>
+            <div class="info"><h3><a href="#">Lunch &amp; learn: subsurface utility engineering</a></h3><p class="when">12:00 PM CT · Bismarck HQ, Room 200</p></div>
+          </div>
+          <div class="event">
+            <div class="date"><div class="m">JUL</div><div class="d">15</div></div>
+            <div class="info"><h3><a href="#">New hire orientation</a></h3><p class="when">9:00 AM CT · All offices</p></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2><span class="material-symbols-outlined">campaign</span> Announcements</h2>
+          <div class="ann success"><span class="ai material-symbols-outlined" aria-hidden="true">check_circle</span><div><strong>Payroll:</strong> June timesheets are due by 5:00 PM CT on Friday, June 27.</div></div>
+          <div class="ann info"><span class="ai material-symbols-outlined" aria-hidden="true">info</span><div><strong>IT maintenance:</strong> The VPN will be unavailable Saturday from 8 to 10 PM CT.</div></div>
+          <div class="ann warn"><span class="ai material-symbols-outlined" aria-hidden="true">warning</span><div><strong>Action needed:</strong> Complete annual cybersecurity training by June 30 to keep system access.</div></div>
+          <div class="ann info"><span class="ai material-symbols-outlined" aria-hidden="true">description</span><div><strong>Policy update:</strong> The revised travel and expense policy takes effect July 1. Review the changes in Resources.</div></div>
+        </div>
+      </section>
+
+      <!-- Project spotlight -->
+      <section class="section" aria-label="Active project spotlight">
+        <div class="section-head">
+          <h2>Project spotlight</h2>
+          <a class="more" href="#">Open project hub <span class="material-symbols-outlined">arrow_forward</span></a>
+        </div>
+        <table class="proj-table">
+          <thead>
+            <tr><th>Project</th><th>Client</th><th>Office</th><th>Project manager</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><a href="#">Bismarck Airport concourse expansion</a></td><td>City of Bismarck</td><td>Bismarck, ND</td><td>Maria Lopez</td><td><span class="pill active">Active</span></td></tr>
+            <tr><td><a href="#">Red River regional water main</a></td><td>Cass County</td><td>Fargo, ND</td><td>Jordan Carter</td><td><span class="pill active">Active</span></td></tr>
+            <tr><td><a href="#">US-12 corridor safety study</a></td><td>SDDOT</td><td>Sioux Falls, SD</td><td>Devin Pratt</td><td><span class="pill review">In review</span></td></tr>
+            <tr><td><a href="#">Williston substation upgrade</a></td><td>Basin Electric</td><td>Williston, ND</td><td>Sara Nguyen</td><td><span class="pill hold">On hold</span></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- People -->
+      <section class="section" aria-label="New team members">
+        <div class="section-head">
+          <h2>New team members</h2>
+          <a class="more" href="#">Browse the directory <span class="material-symbols-outlined">arrow_forward</span></a>
+        </div>
+        <div class="people-grid">
+          <div class="person"><div class="av a">EK</div><div class="nm">Erin Kowalski</div><div class="rl">Transportation Engineer</div><div class="of">Bismarck, ND</div></div>
+          <div class="person"><div class="av b">RT</div><div class="nm">Raj Thapa</div><div class="rl">Water Resources EIT</div><div class="of">Fargo, ND</div></div>
+          <div class="person"><div class="av c">MB</div><div class="nm">Monica Bell</div><div class="rl">Environmental Scientist</div><div class="of">Rapid City, SD</div></div>
+          <div class="person"><div class="av d">JO</div><div class="nm">James Owusu</div><div class="rl">GIS Analyst</div><div class="of">Minneapolis, MN</div></div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="wrap">
+      <div class="foot-grid">
+        <div>
+          <img class="foot-logo" src="assets/KLJ-White.svg" alt="KLJ" />
+          <p class="tagline">Engineering, Reimagined.</p>
+          <p style="margin-top:14px; font-size:14px; color:#9fb1bd; max-width:34ch;">The internal home for KLJ employees. Questions about this site? Reach the Communications team.</p>
+        </div>
+        <div>
+          <h4>Popular</h4>
+          <ul>
+            <li><a href="#">Timesheets</a></li>
+            <li><a href="#">PTO &amp; leave</a></li>
+            <li><a href="#">Project files</a></li>
+            <li><a href="#">Expense reports</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Departments</h4>
+          <ul>
+            <li><a href="#">Human resources</a></li>
+            <li><a href="#">IT services</a></li>
+            <li><a href="#">Marketing</a></li>
+            <li><a href="#">Safety</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">IT help desk</a></li>
+            <li><a href="#">Facilities request</a></li>
+            <li><a href="#">Submit news</a></li>
+            <li><a href="#">Give feedback</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="foot-bar">
+        <span>© 2026 KLJ. For internal use only.</span>
+        <span>Built on the KLJ portal style guide · SharePoint Online</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

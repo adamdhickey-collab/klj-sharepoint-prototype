@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KLJ · SharePoint Portal Style Guide</title>
+  <meta name="description" content="Brand and UI style guide for the KLJ Engineering SharePoint portal." />
+  <style>
+    /* =========================================================
+       KLJ SharePoint Portal Style Guide
+       Brand tokens sourced from kljeng.com
+       ========================================================= */
+    :root {
+      /* Brand */
+      --klj-orange:      #dd5900;
+      --klj-orange-dark: #c44f00;
+      --klj-orange-deep: #aa4400;
+      --klj-amber:       #ff9e1b;
+      --klj-red:         #d6351a;
+
+      --klj-teal:        #00848e;
+      --klj-teal-dark:   #00555b;
+
+      /* Ink + neutrals */
+      --klj-slate:       #323e48;
+      --klj-charcoal:    #3e3e3e;
+      --klj-gray:        #666d70;
+      --klj-gray-mid:    #9a9a9a;
+      --klj-border:      #cacccc;
+      --klj-border-soft: #e5e5e1;
+
+      /* Surfaces */
+      --klj-white:       #ffffff;
+      --klj-paper:       #f8f8f7;
+      --klj-mist:        #efefef;
+      --klj-stone:       #ecece9;
+
+      /* Accessible orange for text/links on white.
+         #dd5900 is only 3.8:1 on white (fails AA for normal text).
+         #c44f00 = 4.7:1, #aa4400 = 5.9:1 (both pass AA). */
+      --klj-orange-text: #c44f00;
+
+      /* Semantic */
+      --bg:              var(--klj-paper);
+      --bg-alt:          var(--klj-white);
+      --text:            var(--klj-slate);
+      --text-soft:       var(--klj-gray);
+      --accent:          var(--klj-orange);     /* large text + UI accents only (>=3:1) */
+      --link:            var(--klj-orange-text); /* AA-safe for body-size links */
+      --link-hover:      var(--klj-orange-deep);
+
+      /* System */
+      --radius:    4px;
+      --radius-lg: 8px;
+      --shadow-1:  0 1px 2px rgba(50,62,72,.08), 0 1px 3px rgba(50,62,72,.06);
+      --shadow-2:  0 4px 12px rgba(50,62,72,.10), 0 2px 4px rgba(50,62,72,.06);
+      --maxw: 1080px;
+      /* Segoe UI: the native SharePoint Online font. No web-font loading needed. */
+      --font-head: "Segoe UI", "Segoe UI Web (West European)", -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-body: "Segoe UI", "Segoe UI Web (West European)", -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    h1, h2, h3, h4, h5 { font-family: var(--font-head); color: var(--klj-slate); margin: 0 0 .4em; line-height: 1.15; font-weight: 700; }
+    p { margin: 0 0 1em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover, a:focus { color: var(--link-hover); text-decoration: underline; }
+    a:focus-visible, .btn:focus-visible, .tile:focus-visible {
+      outline: 3px solid var(--klj-orange); outline-offset: 2px; border-radius: 2px;
+    }
+    code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: .85em; background: var(--klj-stone); color: var(--klj-orange-deep);
+      padding: .12em .4em; border-radius: 3px;
+    }
+    .container { max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+
+    /* ---------- Prototype switcher (preview-only meta nav) ---------- */
+    .proto-nav { background: #1b2127; color: #fff; font-family: var(--font-body); }
+    .proto-nav .in { max-width: var(--maxw); margin: 0 auto; padding: 0 28px; height: 40px; display: flex; align-items: center; gap: 14px; }
+    .proto-nav .pb { font-size: 12px; font-weight: 700; letter-spacing: .3px; color: #aab3b8; }
+    .proto-nav .pb b { color: var(--klj-orange); }
+    .proto-nav .links { margin-left: auto; display: flex; gap: 4px; }
+    .proto-nav a { color: #cdd2d4; font-size: 13px; font-weight: 600; text-decoration: none; padding: 6px 13px; border-radius: var(--radius); }
+    .proto-nav a:hover { background: rgba(255,255,255,.12); color: #fff; text-decoration: none; }
+    .proto-nav a.active { background: var(--klj-orange-text); color: #fff; }
+
+    /* ---------- Top bar ---------- */
+    .topbar {
+      position: sticky; top: 0; z-index: 50;
+      background: var(--klj-slate); color: #fff;
+      border-bottom: 3px solid var(--klj-orange);
+    }
+    .topbar-inner { display: flex; align-items: center; gap: 20px; height: 60px; }
+    .brandmark { display: flex; align-items: center; gap: 11px; text-decoration: none; }
+    .brandmark .brand-mark { height: 30px; width: auto; }
+    .brandmark .logo {
+      font-family: var(--font-head); font-weight: 700; font-size: 26px; letter-spacing: 1px;
+      color: #fff;
+    }
+    .brandmark .logo b { color: var(--klj-orange); }
+    .brandmark .sub { font-size: 13px; color: #c7c9ca; letter-spacing: .2px; }
+    .topnav { margin-left: auto; display: flex; gap: 4px; flex-wrap: wrap; }
+    .topnav a {
+      color: #dfe2e3; font-size: 14px; font-weight: 600; padding: 8px 12px; border-radius: var(--radius);
+      letter-spacing: .1px;
+    }
+    .topnav a:hover { background: rgba(255,255,255,.08); color: #fff; text-decoration: none; }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      background: linear-gradient(135deg, #2a343d 0%, #323e48 55%, #3e4a54 100%);
+      color: #fff; padding: 88px 0 80px; position: relative; overflow: hidden;
+    }
+    .hero::after {
+      content: ""; position: absolute; right: -80px; bottom: -80px;
+      width: 360px; height: 360px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(221,89,0,.35), transparent 70%);
+    }
+    .hero .eyebrow {
+      color: var(--klj-amber); letter-spacing: .2px;
+      font-weight: 700; font-size: 14px; margin: 0 0 16px;
+    }
+    .hero h1 { color: #fff; font-size: clamp(34px, 5vw, 56px); max-width: 16ch; }
+    .hero .tagline { font-style: italic; font-size: 20px; color: #e5e5e1; margin-top: 6px; }
+    .hero .lede { max-width: 60ch; color: #cdd2d4; font-size: 17px; margin-top: 18px; }
+    .hero-meta { display: flex; gap: 28px; margin-top: 36px; flex-wrap: wrap; }
+    .hero-meta div { border-left: 2px solid var(--klj-orange); padding-left: 14px; }
+    .hero-meta .k { display: block; font-size: 12px; letter-spacing: .2px; color: #9aa3a8; }
+    .hero-meta .v { font-family: var(--font-head); font-weight: 700; font-size: 16px; color: #fff; }
+
+    /* ---------- Sections ---------- */
+    section.block { padding: 72px 0; border-bottom: 1px solid var(--klj-border-soft); }
+    section.block:nth-of-type(even) { background: var(--klj-white); }
+    .section-head { margin-bottom: 40px; max-width: 70ch; }
+    .section-eyebrow {
+      color: var(--klj-orange-text); font-weight: 700; font-size: 14px;
+      letter-spacing: .2px; margin: 0 0 8px;
+    }
+    .section-head h2 { font-size: clamp(26px, 3.4vw, 38px); }
+    .section-head p { color: var(--text-soft); font-size: 17px; margin: 10px 0 0; }
+    .subhead { font-size: 15px; letter-spacing: .1px; color: var(--klj-slate); font-weight: 700; margin: 36px 0 16px; }
+
+    /* ---------- Color ---------- */
+    .swatch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 18px; }
+    .swatch { border: 1px solid var(--klj-border-soft); border-radius: var(--radius-lg); overflow: hidden; background: #fff; box-shadow: var(--shadow-1); }
+    .swatch .chip { height: 96px; display: flex; align-items: flex-end; padding: 10px; }
+    .swatch .chip .role { font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 3px; background: rgba(255,255,255,.85); color: #323e48; }
+    .swatch .meta { padding: 12px 14px; }
+    .swatch .name { font-family: var(--font-head); font-weight: 700; font-size: 14px; display: block; }
+    .swatch .hex { font-family: monospace; font-size: 13px; color: var(--text-soft); text-transform: uppercase; }
+    .swatch .use { font-size: 12px; color: var(--text-soft); margin-top: 6px; display: block; line-height: 1.4; }
+
+    /* ---------- SP theme token table ---------- */
+    .token-note {
+      background: #fff; border: 1px solid var(--klj-border); border-left: 4px solid var(--klj-teal);
+      border-radius: var(--radius); padding: 20px 22px; margin-top: 28px;
+    }
+    table.tokens { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 14px; background: #fff; }
+    table.tokens th, table.tokens td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--klj-border-soft); }
+    table.tokens th { background: var(--klj-slate); color: #fff; font-family: var(--font-head); font-size: 13px; font-weight: 600; letter-spacing: .2px; }
+    table.tokens td code { background: var(--klj-stone); }
+    .dot { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: -2px; margin-right: 8px; border: 1px solid rgba(0,0,0,.1); }
+
+    /* ---------- Implementation: guardrail, steps, code blocks ---------- */
+    .guardrail { background: #fff4e3; border: 1px solid #ffd591; border-left: 5px solid var(--klj-orange); border-radius: var(--radius); padding: 18px 22px; margin: 4px 0; }
+    .guardrail .gh { font-family: var(--font-head); font-weight: 700; color: var(--klj-orange-deep); display: block; margin-bottom: 5px; }
+    .guardrail .gh::before { content: "\26A0  "; }
+    .step { font-family: var(--font-head); font-weight: 700; font-size: 16px; color: var(--klj-slate); margin: 40px 0 4px; display: flex; align-items: center; gap: 12px; }
+    .step .n { flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; background: var(--klj-orange-text); color: #fff; font-size: 14px; font-weight: 700; }
+    .step-sub { color: var(--text-soft); font-size: 15px; margin: 0 0 6px 38px; }
+    .step-sub a { color: var(--link); font-weight: 600; }
+    pre.code { background: #29333c; color: #e7eaec; border-radius: var(--radius-lg); padding: 20px 22px; overflow-x: auto; font-size: 13px; line-height: 1.7; font-family: "SFMono-Regular", Consolas, Menlo, monospace; margin: 14px 0 0; tab-size: 2; }
+    pre.code .c { color: #88a0ad; font-style: italic; }
+    pre.code .k { color: #ff9e6b; }
+    pre.code .s { color: #ffc97a; }
+
+    /* ---------- Typography ---------- */
+    .type-row { display: flex; align-items: baseline; gap: 20px; padding: 16px 0; border-bottom: 1px dashed var(--klj-border-soft); flex-wrap: wrap; }
+    .type-row .label { width: 130px; flex-shrink: 0; font-size: 13px; color: var(--text-soft); letter-spacing: 0; }
+    .type-row .spec { margin-left: auto; font-family: monospace; font-size: 12px; color: var(--klj-gray-mid); }
+    .ty-display { font-family: var(--font-head); font-weight: 700; font-size: 44px; color: var(--klj-slate); line-height: 1.1; }
+    .ty-h2 { font-family: var(--font-head); font-weight: 600; font-size: 30px; color: var(--klj-slate); }
+    .ty-h3 { font-family: var(--font-head); font-weight: 600; font-size: 22px; color: var(--klj-slate); }
+    .ty-body { font-family: var(--font-body); font-size: 16px; color: var(--text); }
+    .ty-small { font-family: var(--font-body); font-size: 13px; color: var(--text-soft); }
+    .font-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 8px; }
+    .font-card { border: 1px solid var(--klj-border-soft); border-radius: var(--radius-lg); padding: 24px; background: #fff; box-shadow: var(--shadow-1); }
+    .font-card .big { font-size: 52px; line-height: 1; color: var(--klj-slate); margin-bottom: 10px; }
+    .font-card .name { font-family: var(--font-head); font-weight: 700; font-size: 18px; }
+    .font-card .meta { font-size: 13px; color: var(--text-soft); }
+    .glyphs { font-size: 15px; color: var(--klj-gray); letter-spacing: 1px; margin-top: 12px; }
+
+    /* ---------- Do / Don't grid (used by Accessibility) ---------- */
+    .dodont { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 24px; }
+    .dd { border-radius: var(--radius-lg); padding: 20px 22px; background: #fff; border: 1px solid var(--klj-border-soft); }
+    .dd h4 { display: flex; align-items: center; gap: 8px; }
+    .dd.do h4 { color: #1f7a44; } .dd.dont h4 { color: var(--klj-red); }
+    .dd ul { margin: 8px 0 0; padding-left: 18px; color: var(--text-soft); font-size: 14px; }
+    .dd li { margin-bottom: 6px; }
+
+    /* ---------- Footer ---------- */
+    footer.site { background: var(--klj-slate); color: #c7c9ca; padding: 40px 0; font-size: 13px; }
+    footer.site .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+    footer.site .logo { font-family: var(--font-head); font-weight: 700; font-size: 22px; color: #fff; display: inline-flex; align-items: center; gap: 10px; }
+    footer.site .logo b { color: var(--klj-orange); }
+    footer.site .logo .foot-mark { height: 30px; width: auto; }
+
+    @media (max-width: 720px) {
+      .font-cards, .dodont { grid-template-columns: 1fr; }
+      .topnav { display: none; }
+      .hero { padding: 60px 0 56px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Prototype switcher (preview only) -->
+  <div class="proto-nav">
+    <div class="in">
+      <span class="pb">KL<b>J</b> · SharePoint prototype</span>
+      <span class="links">
+        <a href="home.html">Portal home</a>
+        <a href="index.html" class="active">Style guide</a>
+      </span>
+    </div>
+  </div>
+
+  <!-- Top bar -->
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brandmark" href="#top">
+        <img class="brand-mark" src="assets/KLJ-White.svg" alt="KLJ" />
+        <span class="sub">Portal style guide</span>
+      </a>
+      <nav class="topnav" aria-label="Sections">
+        <a href="#color">Color</a>
+        <a href="#theme">SP Theme</a>
+        <a href="#type">Type</a>
+        <a href="#accessibility">A11y</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="top">
+    <div class="container">
+      <p class="eyebrow">KLJ Engineering · Intranet portal</p>
+      <h1>SharePoint Portal Style Guide</h1>
+      <p class="tagline">Engineering, Reimagined.</p>
+      <p class="lede">A practical reference for building a consistent, on-brand KLJ intranet on SharePoint. Use these colors, type, and theme tokens when configuring site themes and page layouts.</p>
+      <div class="hero-meta">
+        <div><span class="k">Version</span><span class="v">v1.0</span></div>
+        <div><span class="k">Platform</span><span class="v">SharePoint Online</span></div>
+        <div><span class="k">Audience</span><span class="v">Portal authors &amp; admins</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COLOR -->
+  <section class="block" id="color">
+    <div class="container">
+      <div class="section-head">
+        <p class="section-eyebrow">01 / Foundations</p>
+        <h2>Color palette</h2>
+        <p>KLJ orange is the signature brand color, but it must be darkened for text. Bright <code>#DD5900</code> carries logos, icons, borders, and large accents, while the darker <code>#C44F00</code> handles links, buttons, and small text so everything clears WCAG AA. Slate and neutral grays carry most of the interface, with teal as a supporting accent.</p>
+      </div>
+
+      <p class="subhead">Primary &amp; accent</p>
+      <div class="swatch-grid">
+        <div class="swatch">
+          <div class="chip" style="background:#dd5900;"><span class="role">Brand</span></div>
+          <div class="meta"><span class="name">KLJ orange</span><span class="hex">#DD5900</span><span class="use">Logo, icons, borders, large accents. Not for text or button labels (3.8:1, fails AA).</span></div>
+        </div>
+        <div class="swatch">
+          <div class="chip" style="background:#c44f00;"><span class="role">Text / UI</span></div>
+          <div class="meta"><span class="name">Orange dark</span><span class="hex">#C44F00</span><span class="use">Links, buttons, small text on light. AA-safe (4.7:1). This is the SharePoint themePrimary.</span></div>
+        </div>
+        <div class="swatch">
+          <div class="chip" style="background:#ff9e1b;"><span class="role">Accent</span></div>
+          <div class="meta"><span class="name">Amber</span><span class="hex">#FF9E1B</span><span class="use">Highlights, eyebrows, sparing decorative accents.</span></div>
+        </div>
+        <div class="swatch">
+          <div class="chip" style="background:#00848e;"><span class="role">Secondary</span></div>
+          <div class="meta"><span class="name">Teal</span><span class="hex">#00848E</span><span class="use">Info callouts, secondary data, supporting graphics.</span></div>
+        </div>
+        <div class="swatch">
+          <div class="chip" style="background:#00555b;"><span class="role">Teal dark</span></div>
+          <div class="meta"><span class="name">Teal deep</span><span class="hex">#00555B</span><span class="use">Teal hover, gradients, dark accent panels.</span></div>
+        </div>
+      </div>
+
+      <p class="subhead">Ink &amp; neutrals</p>
+      <div class="swatch-grid">
+        <div class="swatch">
+          <div class="chip" style="background:#323e48;"><span class="role">Text</span></div>
+          <div class="meta"><span class="name">Slate</span><span class="hex">#323E48</span><span class="use">Headings, primary text, dark headers and footers.</span></div>
+        </div>
+        <div class="swatch">
+          <div class="chip" style="background:#666d70;"><span class="role" style="background:#fff;">Body</span></div>
+          <div class="meta"><span class="name">Gray</span><span class="hex">#666D70</span><span class="use">Secondary text, captions, supporting copy.</span></div>
+        </div>
+        <div class="swatch">
+          <div class="chip" style="background:#cacccc;"><span class="role">Border</span></div>
+          <div class="meta"><span class="name">Border</span><span class="hex">#CACCCC</span><span class="use">Dividers, input borders, table rules.</span></div>
+        </div>
+        <div class="swatch">
+          <div class="chip" style="background:#ecece9;"><span class="role">Surface</span></div>
+          <div class="meta"><span class="name">Stone</span><span class="hex">#ECECE9</span><span class="use">Chips, subtle fills, hover backgrounds.</span></div>
+        </div>
+        <div class="swatch">
+          <div class="chip" style="background:#f8f8f7; border-bottom:1px solid #e5e5e1;"><span class="role">Page</span></div>
+          <div class="meta"><span class="name">Paper</span><span class="hex">#F8F8F7</span><span class="use">Alternating section and page backgrounds.</span></div>
+        </div>
+      </div>
+
+      <p class="subhead">Status colors</p>
+      <div class="swatch-grid">
+        <div class="swatch"><div class="chip" style="background:#1f7a44;"><span class="role">Success</span></div><div class="meta"><span class="name">Success</span><span class="hex">#1F7A44</span></div></div>
+        <div class="swatch"><div class="chip" style="background:#ff9e1b;"><span class="role">Warning</span></div><div class="meta"><span class="name">Warning</span><span class="hex">#FF9E1B</span></div></div>
+        <div class="swatch"><div class="chip" style="background:#d6351a;"><span class="role">Error</span></div><div class="meta"><span class="name">Error</span><span class="hex">#D6351A</span></div></div>
+        <div class="swatch"><div class="chip" style="background:#00848e;"><span class="role">Info</span></div><div class="meta"><span class="name">Info</span><span class="hex">#00848E</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHAREPOINT THEME -->
+  <section class="block" id="theme">
+    <div class="container">
+      <div class="section-head">
+        <p class="section-eyebrow">02 / SharePoint</p>
+        <h2>Theming SharePoint with the KLJ palette</h2>
+        <p>A SharePoint Online theme is a full Fluent UI color palette, generated from three brand inputs, added to the tenant, and then read automatically by every link, button, and web part. This is the exact path a developer follows to hook the KLJ colors into SharePoint.</p>
+      </div>
+
+      <div class="guardrail">
+        <span class="gh">Accessibility guardrail: seed the theme with the darker orange</span>
+        <code>themePrimary</code> drives link text and button labels at body size, so it must meet WCAG AA (4.5:1). KLJ Orange <code>#dd5900</code> is only 3.8:1 on white and <strong>fails</strong>, so it cannot be the theme primary. Seed the theme with <code>#c44f00</code> (4.7:1) instead. Bright <code>#dd5900</code> still lives in the brand, on logos, icons, borders, and large accents, but those never flow through <code>themePrimary</code>, so they stay safe.
+      </div>
+
+      <p class="step"><span class="n">1</span> Pick the three seed colors</p>
+      <p class="step-sub">Enter these into the <a href="https://aka.ms/themedesigner" target="_blank" rel="noopener">Fluent UI Theme Designer</a>. It expands them into the full slot ramp in step 2.</p>
+      <table class="tokens">
+        <thead><tr><th>Theme Designer input</th><th>Value</th><th>Becomes</th></tr></thead>
+        <tbody>
+          <tr><td>Primary color</td><td><span class="dot" style="background:#c44f00;"></span><code>#c44f00</code></td><td><code>themePrimary</code> &rarr; links, buttons, active nav (AA-safe)</td></tr>
+          <tr><td>Text color</td><td><span class="dot" style="background:#323e48;"></span><code>#323e48</code></td><td><code>neutralPrimary</code> / <code>bodyText</code></td></tr>
+          <tr><td>Background color</td><td><span class="dot" style="background:#fff;"></span><code>#ffffff</code></td><td><code>white</code> / <code>bodyBackground</code></td></tr>
+        </tbody>
+      </table>
+
+      <p class="step"><span class="n">2</span> Map the generated palette</p>
+      <p class="step-sub">The designer outputs the theme ramp plus neutrals. These are the values for the KLJ theme and where each one surfaces in the UI.</p>
+      <table class="tokens">
+        <thead><tr><th>Slot</th><th>Value</th><th>Where it shows up</th></tr></thead>
+        <tbody>
+          <tr><td><code>themePrimary</code></td><td><span class="dot" style="background:#c44f00;"></span><code>#c44f00</code></td><td>Links, primary buttons, active nav, focus</td></tr>
+          <tr><td><code>themeLighterAlt</code></td><td><span class="dot" style="background:#fdf7f2;"></span><code>#fdf7f2</code></td><td>Subtle hover wash</td></tr>
+          <tr><td><code>themeLighter</code></td><td><span class="dot" style="background:#f6dcc7;"></span><code>#f6dcc7</code></td><td>Selected row, light fill</td></tr>
+          <tr><td><code>themeLight</code></td><td><span class="dot" style="background:#ecbb98;"></span><code>#ecbb98</code></td><td>Light accent backgrounds</td></tr>
+          <tr><td><code>themeTertiary</code></td><td><span class="dot" style="background:#da8047;"></span><code>#da8047</code></td><td>Mid accent</td></tr>
+          <tr><td><code>themeSecondary</code></td><td><span class="dot" style="background:#ca5e12;"></span><code>#ca5e12</code></td><td>Near-primary accent</td></tr>
+          <tr><td><code>themeDarkAlt</code></td><td><span class="dot" style="background:#b04700;"></span><code>#b04700</code></td><td>Button hover</td></tr>
+          <tr><td><code>themeDark</code></td><td><span class="dot" style="background:#953c00;"></span><code>#953c00</code></td><td>Button pressed</td></tr>
+          <tr><td><code>themeDarker</code></td><td><span class="dot" style="background:#6e2c00;"></span><code>#6e2c00</code></td><td>High-emphasis accent text</td></tr>
+          <tr><td><code>neutralPrimary</code></td><td><span class="dot" style="background:#323e48;"></span><code>#323e48</code></td><td>Body and heading text</td></tr>
+          <tr><td><code>neutralSecondary</code></td><td><span class="dot" style="background:#666d70;"></span><code>#666d70</code></td><td>Secondary text, metadata</td></tr>
+          <tr><td><code>neutralTertiary</code></td><td><span class="dot" style="background:#9a9a9a;"></span><code>#9a9a9a</code></td><td>Disabled text, subtle icons</td></tr>
+          <tr><td><code>neutralLight</code></td><td><span class="dot" style="background:#ecece9;"></span><code>#ecece9</code></td><td>Hover fills, chips, dividers</td></tr>
+          <tr><td><code>neutralLighter</code></td><td><span class="dot" style="background:#f4f4f2;"></span><code>#f4f4f2</code></td><td>Card hover</td></tr>
+          <tr><td><code>neutralLighterAlt</code></td><td><span class="dot" style="background:#f8f8f7;"></span><code>#f8f8f7</code></td><td>Page and section background</td></tr>
+          <tr><td><code>white</code> / <code>bodyBackground</code></td><td><span class="dot" style="background:#fff;"></span><code>#ffffff</code></td><td>Canvas and card surface</td></tr>
+          <tr><td><code>bodyText</code></td><td><span class="dot" style="background:#323e48;"></span><code>#323e48</code></td><td>Default text color</td></tr>
+        </tbody>
+      </table>
+
+      <p class="step"><span class="n">3</span> Apply it with PowerShell</p>
+      <p class="step-sub">Add the palette to the tenant theme gallery once. Site owners then select &ldquo;KLJ Brand&rdquo; under Settings &rarr; Change the look &rarr; Theme.</p>
+      <pre class="code"><span class="c"># 1 · Connect to the SharePoint admin center</span>
+Connect-SPOService -Url https://kljeng-admin.sharepoint.com
+
+<span class="c"># 2 · KLJ palette (Fluent UI Theme Designer output)
+#      Primary #c44f00 · Text #323e48 · Background #ffffff</span>
+$klj = @{
+  <span class="s">"themePrimary"</span>         = <span class="s">"#c44f00"</span>; <span class="s">"themeLighterAlt"</span>      = <span class="s">"#fdf7f2"</span>;
+  <span class="s">"themeLighter"</span>         = <span class="s">"#f6dcc7"</span>; <span class="s">"themeLight"</span>           = <span class="s">"#ecbb98"</span>;
+  <span class="s">"themeTertiary"</span>        = <span class="s">"#da8047"</span>; <span class="s">"themeSecondary"</span>       = <span class="s">"#ca5e12"</span>;
+  <span class="s">"themeDarkAlt"</span>         = <span class="s">"#b04700"</span>; <span class="s">"themeDark"</span>            = <span class="s">"#953c00"</span>;
+  <span class="s">"themeDarker"</span>          = <span class="s">"#6e2c00"</span>; <span class="s">"neutralLighterAlt"</span>    = <span class="s">"#f8f8f7"</span>;
+  <span class="s">"neutralLighter"</span>       = <span class="s">"#f4f4f2"</span>; <span class="s">"neutralLight"</span>         = <span class="s">"#ecece9"</span>;
+  <span class="s">"neutralQuaternaryAlt"</span> = <span class="s">"#dadad7"</span>; <span class="s">"neutralQuaternary"</span>    = <span class="s">"#d0d0cd"</span>;
+  <span class="s">"neutralTertiaryAlt"</span>   = <span class="s">"#c8c8c5"</span>; <span class="s">"neutralTertiary"</span>      = <span class="s">"#9a9a9a"</span>;
+  <span class="s">"neutralSecondary"</span>     = <span class="s">"#666d70"</span>; <span class="s">"neutralPrimaryAlt"</span>    = <span class="s">"#444f58"</span>;
+  <span class="s">"neutralPrimary"</span>       = <span class="s">"#323e48"</span>; <span class="s">"neutralDark"</span>          = <span class="s">"#2a343d"</span>;
+  <span class="s">"black"</span>                = <span class="s">"#1b2127"</span>; <span class="s">"white"</span>                = <span class="s">"#ffffff"</span>;
+  <span class="s">"primaryBackground"</span>    = <span class="s">"#ffffff"</span>; <span class="s">"primaryText"</span>          = <span class="s">"#323e48"</span>;
+  <span class="s">"bodyBackground"</span>       = <span class="s">"#ffffff"</span>; <span class="s">"bodyText"</span>             = <span class="s">"#323e48"</span>;
+}
+
+<span class="c"># 3 · Register the theme in the tenant gallery</span>
+Add-SPOTheme -Name <span class="s">"KLJ Brand"</span> -Palette $klj -IsInverted $false -Overwrite</pre>
+
+      <p class="step"><span class="n">4</span> Reference it in custom code (SPFx)</p>
+      <p class="step-sub">Bind component styles to theme slots so custom web parts restyle automatically when the KLJ theme is applied. Out-of-the-box links and buttons already inherit <code>themePrimary</code> through Fluent&rsquo;s <code>semanticColors.link</code>, so no extra CSS is needed for them.</p>
+      <pre class="code"><span class="c">// SPFx web part .module.scss — bind to theme slots, not hex.
+// The component then follows whatever theme the site has applied.</span>
+.cta {
+  color: <span class="s">"[theme: white, default: #ffffff]"</span>;
+  background-color: <span class="s">"[theme: themePrimary, default: #c44f00]"</span>;
+}
+.cta:hover { background-color: <span class="s">"[theme: themeDarkAlt, default: #b04700]"</span>; }
+
+.link    { color: <span class="s">"[theme: themePrimary, default: #c44f00]"</span>; }
+.heading { color: <span class="s">"[theme: neutralPrimary, default: #323e48]"</span>; }</pre>
+
+      <div class="token-note">
+        <strong>Authoring tip:</strong> Apply the theme at the hub site so every associated site inherits it. Set the site header background to <code>#323e48</code> (Slate) with the white KLJ logo, and reserve full-orange section backgrounds for rare, high-impact moments.
+      </div>
+    </div>
+  </section>
+
+  <!-- TYPOGRAPHY -->
+  <section class="block" id="type">
+    <div class="container">
+      <div class="section-head">
+        <p class="section-eyebrow">03 / Foundations</p>
+        <h2>Typography</h2>
+        <p>The portal uses <strong>Segoe UI</strong>, the native SharePoint Online typeface. Standardizing on it means zero web-font loading, a perfect match with the SharePoint chrome and suite bar, and consistent rendering across Microsoft 365. Use Semibold for headings and Regular for body copy. The fallback stack covers non-Windows devices with the closest system font.</p>
+      </div>
+
+      <div class="font-cards">
+        <div class="font-card">
+          <div class="big" style="font-family:var(--font-head); font-weight:600;">Aa</div>
+          <div class="name">Segoe UI Semibold</div>
+          <div class="meta">Page titles, section headings, web part titles, navigation.</div>
+          <div class="glyphs" style="font-family:var(--font-head); font-weight:600;">ABCDEFGHIJKLM<br>abcdefghijklm 1234567890</div>
+        </div>
+        <div class="font-card">
+          <div class="big" style="font-family:var(--font-body); font-weight:400;">Aa</div>
+          <div class="name">Segoe UI Regular</div>
+          <div class="meta">Body copy, captions, tables, long-form content. Weights 400 / 600 / 700.</div>
+          <div class="glyphs" style="font-family:var(--font-body);">ABCDEFGHIJKLM<br>abcdefghijklm 1234567890</div>
+        </div>
+      </div>
+
+      <p class="subhead">Type scale</p>
+      <div>
+        <div class="type-row"><span class="label">Display</span><span class="ty-display">Engineering, Reimagined</span><span class="spec">Segoe UI Bold · 44px</span></div>
+        <div class="type-row"><span class="label">Heading 2</span><span class="ty-h2">Section heading</span><span class="spec">Segoe UI Semibold · 30px</span></div>
+        <div class="type-row"><span class="label">Heading 3</span><span class="ty-h3">Web part title</span><span class="spec">Segoe UI Semibold · 22px</span></div>
+        <div class="type-row"><span class="label">Body</span><span class="ty-body">Body copy for portal pages and articles.</span><span class="spec">Segoe UI Regular · 16px</span></div>
+        <div class="type-row"><span class="label">Small / meta</span><span class="ty-small">Captions, dates, and metadata.</span><span class="spec">Segoe UI Regular · 13px</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACCESSIBILITY -->
+  <section class="block" id="accessibility">
+    <div class="container">
+      <div class="section-head">
+        <p class="section-eyebrow">04 / Accessibility</p>
+        <h2>Color contrast (WCAG AA)</h2>
+        <p>KLJ Orange <code>#dd5900</code> is a bright accent: it measures 3.8:1 on white, which clears AA for large text and UI elements but <strong>not</strong> for normal body text or small labels. To stay compliant, use the darker <code>#c44f00</code> for any orange text at body size, and reserve <code>#dd5900</code> for headings, icons, borders, and accents.</p>
+      </div>
+
+      <table class="tokens">
+        <thead><tr><th>Pairing</th><th>Ratio</th><th>Normal text<br>(4.5:1)</th><th>Large / UI<br>(3:1)</th></tr></thead>
+        <tbody>
+          <tr><td><span class="dot" style="background:#dd5900;"></span>Orange <code>#dd5900</code> on white</td><td>3.8:1</td><td style="color:var(--klj-red);font-weight:700;">✕ Fail</td><td style="color:#1f7a44;font-weight:700;">✓ Pass</td></tr>
+          <tr><td><span class="dot" style="background:#c44f00;"></span>Orange Dark <code>#c44f00</code> on white</td><td>4.7:1</td><td style="color:#1f7a44;font-weight:700;">✓ Pass</td><td style="color:#1f7a44;font-weight:700;">✓ Pass</td></tr>
+          <tr><td><span class="dot" style="background:#aa4400;"></span>Orange Deep <code>#aa4400</code> on white</td><td>5.9:1</td><td style="color:#1f7a44;font-weight:700;">✓ Pass</td><td style="color:#1f7a44;font-weight:700;">✓ Pass</td></tr>
+          <tr><td><span class="dot" style="background:#323e48;"></span>Slate <code>#323e48</code> on white</td><td>11.6:1</td><td style="color:#1f7a44;font-weight:700;">✓ Pass</td><td style="color:#1f7a44;font-weight:700;">✓ Pass</td></tr>
+          <tr><td><span class="dot" style="background:#666d70;"></span>Gray <code>#666d70</code> on white</td><td>4.9:1</td><td style="color:#1f7a44;font-weight:700;">✓ Pass</td><td style="color:#1f7a44;font-weight:700;">✓ Pass</td></tr>
+          <tr><td><span class="dot" style="background:#ff9e1b;"></span>Amber <code>#ff9e1b</code> on white</td><td>1.9:1</td><td style="color:var(--klj-red);font-weight:700;">✕ Fail</td><td style="color:var(--klj-red);font-weight:700;">✕ Fail</td></tr>
+          <tr><td><span class="dot" style="background:#ff9e1b;"></span>Amber <code>#ff9e1b</code> on slate</td><td>5.3:1</td><td style="color:#1f7a44;font-weight:700;">✓ Pass</td><td style="color:#1f7a44;font-weight:700;">✓ Pass</td></tr>
+        </tbody>
+      </table>
+
+      <p class="subhead">Rules of thumb</p>
+      <div class="dodont">
+        <div class="dd do">
+          <h4>✓ Do</h4>
+          <ul>
+            <li>Use <code>#c44f00</code> for orange links and small text on white.</li>
+            <li>Use white text on <code>#c44f00</code> (not <code>#dd5900</code>) for filled buttons.</li>
+            <li>Use bright <code>#dd5900</code> for headings, icons, borders, and the topbar accent.</li>
+            <li>Pair Amber <code>#ff9e1b</code> with slate, never as text on white.</li>
+            <li>Set the SharePoint <code>themePrimary</code> slot to <code>#c44f00</code>.</li>
+          </ul>
+        </div>
+        <div class="dd dont">
+          <h4>✕ Don't</h4>
+          <ul>
+            <li>Don't set body text or small labels in <code>#dd5900</code> on white.</li>
+            <li>Don't put white text on a <code>#dd5900</code> fill at normal size.</li>
+            <li>Don't use Amber for text on a light background.</li>
+            <li>Don't rely on color alone to signal status. Pair it with a label or icon.</li>
+            <li>Don't drop the visible focus ring on links and buttons.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="token-note">
+        <strong>Target:</strong> WCAG 2.1 Level AA. Normal text needs 4.5:1, large text (24px, or 18.66px bold) and UI components need 3:1. Verify any new pairing in a contrast checker such as WebAIM before publishing a page.
+      </div>
+    </div>
+  </section>
+
+  <footer class="site">
+    <div class="container">
+      <span class="logo"><img class="foot-mark" src="assets/KLJ-White.svg" alt="KLJ" /></span>
+      <span>SharePoint portal style guide · v1.0 · Brand tokens derived from kljeng.com. Internal use only.</span>
+    </div>
+  </footer>
+
+</body>
+</html>
